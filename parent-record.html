@@ -294,9 +294,17 @@
 
       // 初始化日期选择器，默认为今天
       const dateInput = document.getElementById('recordDate');
+      // 使用本地时区的今天日期
       const today = new Date();
-      dateInput.value = today.toISOString().split('T')[0];
-      dateInput.max = today.toISOString().split('T')[0]; // 不能选择未来日期
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const todayString = `${year}-${month}-${day}`;
+
+      dateInput.value = todayString;
+      dateInput.max = todayString; // 不能选择未来日期
+
+      console.log('📅 当前日期:', todayString);
 
       // 加载任务列表并渲染表格
       tasks = dataManager.getTasks().filter(t => t.enabled);
